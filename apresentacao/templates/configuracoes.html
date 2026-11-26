@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% import "_macros.html" as m %}
+{% block titulo %}Configurações{% endblock %}
+{% block corpo %}
+<section class="painel estreito"><h1>Configurações</h1>
+<form method="post" class="form" data-confirmar="Aplicar as alterações de privacidade e segurança?">
+  <label class="opcao"><input type="checkbox" name="exibir_nome" {{ 'checked' if prefs.exibir_nome_comentarios }}> Exibir nome de usuário quando publicar comentários em produtos</label>
+  <label class="opcao"><input type="checkbox" name="dois_fatores" {{ 'checked' if prefs.dois_fatores }}> Autenticação de dois fatores</label>
+  <label class="opcao"><input type="checkbox" name="recomendacoes" {{ 'checked' if prefs.recomendacoes_historico }}> Recomendações de produtos baseadas em histórico</label>
+  <div class="linha">{{ m.voltar() }}<button class="btn btn-avancar">Salvar</button></div></form>
+<a class="btn btn-avancar" href="{{ url_for('contas.acessibilidade') }}">Acessibilidade</a></section>
+{% endblock %}

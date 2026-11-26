@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% import "_macros.html" as m %}
+{% block titulo %}Acessibilidade{% endblock %}
+{% block corpo %}
+<section class="painel estreito"><h1>Acessibilidade</h1>
+<form method="post" class="form">
+  <label>Tamanho de fonte<select name="tamanho_fonte">{% for k, px in tamanhos.items() %}<option value="{{ k }}" {{ 'selected' if prefs.tamanho_fonte==k }}>{{ k | capitalize }} ({{ px }}px)</option>{% endfor %}</select></label>
+  <label>Quantidade de produtos exibidos por vez<select name="por_vez">{% for n in [4,8,12,16,24] %}<option {{ 'selected' if prefs.produtos_por_vez==n }}>{{ n }}</option>{% endfor %}</select></label>
+  <fieldset><legend>Personalização de cores para daltônicos</legend>
+    <p><span class="btn btn-avancar">Avançar</span> botões que levam à próxima página · <span class="btn btn-voltar">Voltar</span> botões que retornam</p>
+    {% for k, (nome, a, b) in presets.items() %}<label class="opcao"><input type="radio" name="preset" value="{{ k }}"> {{ nome }} <span class="amostra" style="background:{{ a }}"></span><span class="amostra" style="background:{{ b }}"></span></label>{% endfor %}
+    <details><summary>Cores Avançadas</summary>
+      <label class="opcao"><input type="checkbox" name="usar_hex"> Usar códigos HEX</label>
+      <label>Avançar<input name="hex_avancar" placeholder="#BFE3C0" value="{{ cores.avancar }}" pattern="#[0-9A-Fa-f]{6}"></label>
+      <label>Voltar<input name="hex_voltar" placeholder="#F4C7C3" value="{{ cores.voltar }}" pattern="#[0-9A-Fa-f]{6}"></label></details></fieldset>
+  <div class="linha">{{ m.voltar() }}<button class="btn btn-avancar">Salvar</button></div></form></section>
+{% endblock %}

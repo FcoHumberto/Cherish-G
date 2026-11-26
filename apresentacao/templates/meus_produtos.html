@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% import "_macros.html" as m %}
+{% block titulo %}Meus Produtos{% endblock %}
+{% block corpo %}<div class="linha entre"><h1>Meus Produtos</h1><a class="btn btn-avancar" href="{{ url_for('produtos.novo_produto') }}">Adicionar Produto</a></div>
+<div class="grade">{% for p in itens %}<a class="card" href="{{ url_for('produtos.editar_produto', pid=p.id) }}">
+<img src="{{ m.foto(p) }}" alt="{{ p.nome }}"><h3>{{ p.nome }}</h3><p>{{ m.preco(p) }}</p><p class="desc">{{ p.descricao[:70] }}…</p>
+<p><b>{{ p.pedidos_pendentes }}</b> pedido(s) pendente(s) · estoque {{ p.estoque }}</p></a>{% else %}<p>Você ainda não vende nada.</p>{% endfor %}</div>{% endblock %}

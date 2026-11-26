@@ -1,0 +1,15 @@
+{% extends "base.html" %}{% import "_macros.html" as m %}
+{% block titulo %}Pagamento{% endblock %}
+{% block corpo %}
+<section class="painel estreito"><h1>Pagamento — {{ total | brl }}</h1>
+<p class="aviso">Ambiente de demonstração: CPF e dados do cartão são validados e <b>nunca armazenados</b>. Use CPF válido (ex.: 529.982.247-25) e o cartão de teste 4242 4242 4242 4242 (terminado em 0002 é recusado).</p>
+<form method="post" class="form" id="form-pagamento">
+  <label>Forma de pagamento<select name="forma" id="forma" required><option value="">Selecione…</option>
+    <option value="pix" {{ 'selected' if f.get('forma')=='pix' }}>PIX</option><option value="cartao" {{ 'selected' if f.get('forma')=='cartao' }}>Cartão</option></select></label>
+  <label>CPF<input name="cpf" id="cpf" inputmode="numeric" placeholder="000.000.000-00" autocomplete="off" required></label>
+  <label data-campo="cartao" hidden>Número do cartão<input name="cartao_numero" id="cartao" inputmode="numeric" autocomplete="off" placeholder="0000 0000 0000 0000"></label>
+  <label data-campo="pix" hidden>Chave PIX do pagador<input name="chave_pix" id="chave" autocomplete="off"></label>
+  <div class="linha">{{ m.voltar() }}<button class="btn btn-avancar" id="enviar" disabled>Prosseguir para o pagamento</button></div>
+</form></section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/pagamento.js') }}"></script>{% endblock %}

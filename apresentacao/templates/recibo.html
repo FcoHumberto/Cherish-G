@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% import "_macros.html" as m %}
+{% block titulo %}Recibo{% endblock %}
+{% block corpo %}
+<section class="painel estreito"><h1>Recibo da compra</h1>
+<table class="tabela"><thead><tr><th>Item</th><th>Qtd</th><th>Preço</th></tr></thead><tbody>
+{% for i in itens %}<tr><td>{{ i.nome }}</td><td>{{ i.quantidade }}</td><td>{{ i.subtotal | brl }}</td></tr>{% endfor %}</tbody>
+<tfoot><tr><th colspan="2">Total</th><th>{{ total | brl }}</th></tr></tfoot></table>
+<p><b>Entrega em:</b> {{ endereco }}</p>
+<div class="linha">{{ m.voltar() }}<a class="btn btn-avancar" href="{{ url_for('pedidos.pagamento') }}">Prosseguir para forma de pagamento</a></div></section>
+{% endblock %}

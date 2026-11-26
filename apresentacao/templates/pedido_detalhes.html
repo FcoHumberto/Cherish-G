@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% import "_macros.html" as m %}
+{% block titulo %}Detalhes do pedido{% endblock %}
+{% block corpo %}
+<section class="painel estreito"><h1>{{ it.nome_produto }}</h1>
+<p><span class="status s-{{ it.status | replace(' ','-') | lower }}">{{ it.status }}</span></p>
+<dl><dt>Localização</dt><dd>{{ it.local_atual }}</dd><dt>Pedido realizado em</dt><dd>{{ it.data_hora }}</dd>
+<dt>Previsão de chegada</dt><dd>{{ it.previsao }}</dd><dt>Entrega em</dt><dd>{{ it.endereco_entrega }}</dd></dl>
+<div class="linha">{{ m.voltar() }}<a class="btn btn-avancar" href="{{ url_for('produtos.detalhe', pid=it.produto_id) }}">Página na Loja</a>
+{% if it.status == 'Pendente' and not it.cliente_ok %}<form method="post" action="{{ url_for('pedidos.recebido', item_id=it.id) }}"><button class="btn btn-avancar">Confirmar recebimento</button></form>{% endif %}
+{% if it.status in ('Perdido', 'Reembolso solicitado') %}<form method="post" action="{{ url_for('pedidos.reembolso', item_id=it.id) }}"><button class="btn btn-avancar" {{ 'disabled' if it.status != 'Perdido' }}>Reembolso</button></form>{% endif %}</div></section>
+{% endblock %}

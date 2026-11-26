@@ -1,0 +1,13 @@
+{% extends "base.html" %}{% import "_macros.html" as m %}
+{% block titulo %}Pagamento por PIX{% endblock %}
+{% block corpo %}
+<section class="painel estreito centro" id="area-pix" data-status="{{ url_for('pedidos.status_pagamento', pgid=pg.id) }}" data-sucesso="{{ url_for('pedidos.sucesso', pgid=pg.id) }}" data-restante="{{ restante }}" data-carrinho="{{ url_for('pedidos.carrinho') }}">
+  <h1>Pague com PIX</h1>
+  <div class="qr">{{ qr | safe }}</div>
+  <p>Ou copie o código:</p><textarea readonly id="codigo" rows="3">{{ pg.codigo_pix }}</textarea>
+  <button type="button" class="btn btn-avancar" id="copiar">Copiar código</button>
+  <p>Expira em <b id="contagem">10:00</b></p>
+  <form method="post" action="{{ url_for('pedidos.simular_pix', pgid=pg.id) }}"><div class="linha">{{ m.voltar() }}<button class="btn btn-voltar">Simular pagamento no app do banco (demo)</button></div></form>
+</section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/pix.js') }}"></script>{% endblock %}

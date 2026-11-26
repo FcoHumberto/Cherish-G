@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% import "_macros.html" as m %}
+{% block titulo %}Nova senha{% endblock %}
+{% block corpo %}
+<section class="painel estreito"><h1>Escolha uma nova senha</h1>
+<form method="post" class="form"><label>Nova senha<input type="password" name="senha" minlength="6" required></label>
+<div class="linha">{{ m.voltar() }}<button class="btn btn-avancar">Salvar senha</button></div></form></section>
+{% endblock %}

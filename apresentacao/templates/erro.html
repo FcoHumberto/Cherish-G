@@ -1,0 +1,3 @@
+{% extends "base.html" %}{% import "_macros.html" as m %}
+{% block titulo %}{{ titulo }}{% endblock %}
+{% block corpo %}<section class="painel"><h1>{{ titulo }}</h1><p>{{ msg }}</p>{{ m.voltar() }}</section>{% endblock %}

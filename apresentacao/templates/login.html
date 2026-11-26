@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% import "_macros.html" as m %}
+{% block titulo %}Entrar{% endblock %}
+{% block corpo %}
+<section class="painel estreito"><h1>Entrar</h1>
+<form method="post" class="form">
+  <label>E-mail<input type="email" name="email" required autofocus></label>
+  <label>Senha<input type="password" name="senha" required></label>
+  <div class="linha">{{ m.voltar() }}<button class="btn btn-avancar">Entrar</button></div>
+</form>
+<p><a href="{{ url_for('contas.esqueci_senha') }}">Esqueci minha senha</a> · <a href="{{ url_for('contas.cadastro') }}">Criar conta</a></p></section>
+{% endblock %}

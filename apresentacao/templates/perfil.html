@@ -1,0 +1,19 @@
+{% extends "base.html" %}{% import "_macros.html" as m %}
+{% block titulo %}Perfil{% endblock %}
+{% block corpo %}
+<section class="painel estreito"><h1>Perfil</h1>
+<form method="post" enctype="multipart/form-data" class="form" data-confirmar="Salvar as alterações do perfil?">
+  <div class="avatar">{% if usuario.foto %}<img src="{{ url_for('static', filename='uploads/' ~ usuario.foto) }}" alt="Sua foto">{% else %}<span>{{ usuario.nome[:1] | upper }}</span>{% endif %}</div>
+  <label>Foto de perfil<input type="file" name="foto" accept="image/*"></label>
+  <label>Nome<input name="nome" value="{{ usuario.nome }}" required></label>
+  <label>E-mail<input type="email" name="email" value="{{ usuario.email }}" required></label>
+  <label>Telefone<input name="telefone" id="telefone" value="{{ usuario.telefone }}" required></label>
+  <label>Endereço de entrega<input name="endereco" value="{{ usuario.endereco_padrao or '' }}"></label>
+  <label>Nova senha (opcional)<input type="password" name="nova_senha" minlength="6"></label>
+  <p>Tipo de conta: <b>{{ 'Vendedor' if usuario.tipo == 'vendedor' else 'Comprador' }}</b></p>
+  <button class="btn btn-avancar">Salvar</button>
+</form>
+<div class="linha"><a class="btn btn-avancar" href="{{ url_for('contas.configuracoes') }}">Configurações</a>
+<a class="btn-link" href="{{ url_for('contas.caixa_de_saida') }}">Caixa de saída (demo)</a></div>
+<form method="post" action="{{ url_for('contas.excluir_conta') }}" data-confirmar="Excluir sua conta definitivamente? Esta ação não pode ser desfeita."><button class="btn-link perigo">Excluir minha conta</button></form></section>
+{% endblock %}

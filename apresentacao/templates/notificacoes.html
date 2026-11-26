@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% import "_macros.html" as m %}
+{% block titulo %}Notificações{% endblock %}
+{% block corpo %}
+<section class="painel"><h1>Notificações</h1>
+{% for n in itens %}<p class="notif {{ '' if n.lida else 'nova' }}">{{ n.mensagem }} <small>· {{ n.data }}</small></p>{% else %}<p>Nenhuma notificação.</p>{% endfor %}{{ m.voltar() }}</section>
+{% endblock %}

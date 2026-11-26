@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% import "_macros.html" as m %}
+{% block titulo %}Criar conta{% endblock %}
+{% block corpo %}
+<section class="painel estreito"><h1>Criar conta</h1>
+<form method="post" class="form">
+  <label>Nome de usuário *<input name="nome" required value="{{ f.get('nome','') }}"></label>
+  <label>E-mail *<input type="email" name="email" required value="{{ f.get('email','') }}"></label>
+  <label>Telefone *<input name="telefone" id="telefone" required placeholder="+55 (85) 91234-5678" inputmode="numeric" value="{{ f.get('telefone','') }}"></label>
+  <label>Tipo de usuário *<select name="tipo" required>
+    <option value="comum" {{ 'selected' if f.get('tipo')=='comum' }}>Usuário comum (comprador)</option>
+    <option value="vendedor" {{ 'selected' if f.get('tipo')=='vendedor' }}>Vendedor</option></select></label>
+  <label>Endereço para entregas (opcional)<input name="endereco" value="{{ f.get('endereco','') }}"></label>
+  <label>Senha *<input type="password" name="senha" minlength="6" required></label>
+  <div class="linha">{{ m.voltar() }}<button class="btn btn-avancar">Criar conta</button></div>
+</form><p>Já tem conta? <a href="{{ url_for('contas.login') }}">Entrar</a></p></section>
+{% endblock %}

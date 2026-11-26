@@ -1,0 +1,23 @@
+{% extends "base.html" %}{% import "_macros.html" as m %}
+{% block titulo %}{{ p.nome }}{% endblock %}
+{% block corpo %}
+<section class="painel produto">
+  <div class="fotos">{% for n in range([fotos|length,1]|max) %}<img src="{{ m.foto(p, n) }}" alt="{{ p.nome }} — foto {{ n+1 }}">{% endfor %}</div>
+  <div>
+    <h1>{{ p.nome }}</h1><p class="loja">Vendido por {{ p.loja }} · {{ p.categoria }}</p>
+    <p class="preco">{{ m.preco(p) }}</p>
+    <p>{% if p.nota_media %}{{ m.estrelas(p.nota_media|round|int) }} {{ p.nota_media }} ({{ p.total_avaliacoes }} avaliações){% else %}Sem avaliações{% endif %}</p>
+    <p>{{ p.descricao }}</p><p><b>Em estoque:</b> {{ p.estoque }}</p>
+    {% if p.estoque > 0 and (not usuario or usuario.id != p.vendedor_id) %}
+    <form method="post" action="{{ url_for('produtos.adicionar_carrinho', pid=p.id) }}" class="linha">
+      <input type="number" name="quantidade" value="1" min="1" max="{{ p.estoque }}" aria-label="Quantidade" class="curto">
+      <button class="btn btn-avancar">Adicionar ao Carrinho</button></form>
+    {% elif p.estoque == 0 %}<p class="aviso erro">Produto esgotado.</p>{% endif %}
+    {{ m.voltar() }}
+  </div>
+</section>
+<section class="painel"><h2>Avaliações</h2>
+{% if pode_avaliar %}<form method="post" action="{{ url_for('produtos.avaliar', pid=p.id) }}" class="form"><label>Nota<select name="nota">{% for n in [5,4,3,2,1] %}<option value="{{ n }}">{{ n }} ★</option>{% endfor %}</select></label>
+<label>Comentário<textarea name="comentario" maxlength="500"></textarea></label><button class="btn btn-avancar">Enviar avaliação</button></form>{% endif %}
+{% for a in avaliacoes %}<article class="email"><b>{{ a.nome if a.exibir_nome else 'Anônimo' }}</b> {{ m.estrelas(a.nota) }}<p>{{ a.comentario }}</p></article>{% else %}<p>Seja o primeiro a avaliar.</p>{% endfor %}</section>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% macro voltar() %}<a class="btn btn-voltar" href="{{ url_for('voltar') }}">← Voltar</a>{% endmacro %}
+{% macro foto(p, n=0) -%}
+{%- set fs = (p.imagens or '').split(',') | select | list -%}
+{%- if fs|length > n -%}{{ url_for('static', filename='uploads/' ~ fs[n]) }}{%- else -%}{{ url_for('produtos.imagem', pid=p.id) }}{%- endif -%}
+{%- endmacro %}
+{% macro preco(p) -%}
+{%- set final = (p.preco * (100 - p.promocao_pct) / 100) | round(2) -%}
+{% if p.promocao_pct %}<s>{{ p.preco | brl }}</s> <strong>{{ final | brl }}</strong> <span class="selo">-{{ p.promocao_pct }}%</span>{% else %}<strong>{{ p.preco | brl }}</strong>{% endif %}
+{%- endmacro %}
+{% macro card(p, link=None) %}
+<a class="card" href="{{ link or url_for('produtos.detalhe', pid=p.id) }}">
+  <img src="{{ foto(p) }}" alt="{{ p.nome }}" loading="lazy">
+  <h3>{{ p.nome }}</h3>
+  <p class="loja">{{ p.loja }}</p>
+  <p>{{ preco(p) }}</p>
+  <p class="desc">{{ p.descricao[:70] }}{% if p.descricao|length > 70 %}…{% endif %}</p>
+  {% if p.nota_media %}<p class="estrelas">★ {{ p.nota_media }} ({{ p.total_avaliacoes }})</p>{% endif %}
+</a>
+{% endmacro %}
+{% macro estrelas(n) %}<span class="estrelas" aria-label="{{ n }} de 5">{{ '★' * n }}{{ '☆' * (5 - n) }}</span>{% endmacro %}

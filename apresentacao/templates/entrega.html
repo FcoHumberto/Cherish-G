@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% import "_macros.html" as m %}
+{% block titulo %}Local de entrega{% endblock %}
+{% block corpo %}
+<section class="painel estreito"><h1>Local de entrega</h1>
+<form method="post" class="form">
+  {% if salvo %}<label class="opcao"><input type="radio" name="salvo" id="usar-salvo" data-valor="{{ salvo }}"> <span>📍 Meu endereço cadastrado: <b>{{ salvo }}</b></span></label>{% endif %}
+  <label>Endereço de entrega<input name="endereco" id="endereco" list="sugestoes" autocomplete="off" required placeholder="Comece a digitar o bairro ou a rua"></label>
+  <datalist id="sugestoes"></datalist>
+  <div class="linha">{{ m.voltar() }}<button class="btn btn-avancar">Confirmar local de entrega</button></div>
+</form></section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/entrega.js') }}"></script>{% endblock %}

@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+cherish.db
+.vault_key
+apresentacao/static/uploads/*
+!apresentacao/static/uploads/.gitkeep

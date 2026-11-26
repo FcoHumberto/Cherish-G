@@ -1,0 +1,4 @@
+{% extends "base.html" %}{% import "_macros.html" as m %}
+{% block titulo %}Acessados Recentemente{% endblock %}
+{% block corpo %}<h1>Acessados Recentemente</h1>
+<div class="grade">{% for p in itens %}{{ m.card(p) }}{% else %}<p>Você ainda não visitou nenhum produto.</p>{% endfor %}</div>{% endblock %}

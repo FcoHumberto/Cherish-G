@@ -1,0 +1,13 @@
+{% extends "base.html" %}{% import "_macros.html" as m %}
+{% block titulo %}Produtos{% endblock %}
+{% block corpo %}
+<form class="busca" method="get">
+  <input type="search" name="q" value="{{ busca }}" placeholder="Pesquisar produtos…" aria-label="Pesquisar">
+  <select name="categoria" aria-label="Categoria"><option value="">Todas as categorias</option>{% for c in categorias %}<option {{ 'selected' if c==cat }}>{{ c }}</option>{% endfor %}</select>
+  <button class="btn btn-avancar">Buscar</button>
+</form>
+{% if recs %}<h2>Baseado nas suas compras</h2><div class="grade">{% for p in recs %}{{ m.card(p) }}{% endfor %}</div>{% endif %}
+<h2>Produtos</h2>
+<div class="grade">{% for p in itens %}{{ m.card(p) }}{% else %}<p>Nenhum produto encontrado.</p>{% endfor %}</div>
+{% if paginas > 1 %}<nav class="paginas">{% for n in range(1, paginas+1) %}<a class="{{ 'atual' if n==pagina }}" href="{{ url_for('produtos.listar', pagina=n, q=busca, categoria=cat) }}">{{ n }}</a>{% endfor %}</nav>{% endif %}
+{% endblock %}

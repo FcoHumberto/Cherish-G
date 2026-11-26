@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block titulo %}Pagamento concluído{% endblock %}
+{% block corpo %}
+<section class="painel estreito centro"><h1>✅</h1>
+<p class="grande">Pagamento bem-sucedido! Você pode fechar esta janela agora e acompanhar a situação do pedido na aba ‘Meus Pedidos’.</p>
+<form method="post" action="{{ url_for('pedidos.concluir', pgid=pg.id) }}"><button class="btn btn-avancar">Fechar</button></form></section>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}{% import "_macros.html" as m %}
+{% block titulo %}{{ 'Adicionar produto' if novo else p.nome }}{% endblock %}
+{% block corpo %}
+<section class="painel"><h1>{{ 'Adicionar produto' if novo else 'Editar produto' }}</h1>
+<form method="post" class="form" {% if novo %}enctype="multipart/form-data"{% endif %}>
+  <label>Nome *<input name="nome" required value="{{ p.get('nome','') }}"></label>
+  <label>Descrição *<textarea name="descricao" required>{{ p.get('descricao','') }}</textarea></label>
+  <label>Categoria<input name="categoria" value="{{ p.get('categoria','Geral') }}"></label>
+  <div class="linha"><label>Preço (R$) *<input name="preco" required inputmode="decimal" value="{{ p.get('preco','') }}"></label>
+  <label>Promoção (%)<input name="promocao" type="number" min="0" max="90" value="{{ p.get('promocao_pct', p.get('promocao', 0)) }}"></label>
+  <label>Estoque *<input name="estoque" type="number" min="0" required value="{{ p.get('estoque','') }}"></label></div>
+  {% if novo %}
+  <label>Fotos (opcional)<input type="file" name="fotos" accept="image/*" multiple></label>
+  <fieldset><legend>Comprovação de posse *</legend>
+    <label>Documento<select name="tipo_comprovante" required>{% for t in tipos %}<option {{ 'selected' if p.get('tipo_comprovante')==t }}>{{ t }}</option>{% endfor %}</select></label>
+    <label>Número / referência do documento<input name="ref_comprovante" required value="{{ p.get('ref_comprovante','') }}"></label></fieldset>
+  {% endif %}
+  <div class="linha">{{ m.voltar() }}<button class="btn btn-avancar">{{ 'Publicar produto' if novo else 'Salvar alterações' }}</button></div>
+</form>
+{% if not novo %}<form method="post" action="{{ url_for('produtos.remover_produto', pid=p.id) }}" data-confirmar="Retirar este produto da venda?"><button class="btn-link perigo">Retirar da venda</button></form>{% endif %}
+</section>
+{% if not novo %}
+<section class="painel"><h2>Pedidos pendentes</h2>
+{% for i in pendentes %}<article class="email"><b>{{ i.quantidade }}× {{ i.nome_produto }}</b> — {{ i.comprador }} <small>({{ i.data_hora }})</small><br><small>Local: {{ i.local_atual }}</small>
+<form method="post" action="{{ url_for('pedidos.acao_vendedor', item_id=i.id) }}" class="linha">
+  <input name="local" placeholder="Estado, cidade, bairro" aria-label="Localização"><button name="acao" value="localizacao" class="btn btn-avancar">Atualizar localização</button>
+  <button name="acao" value="entregador" class="btn btn-avancar" {{ 'disabled' if i.entregador_ok }}>Entregador confirmou (simulação)</button>
+  <button name="acao" value="perdido" class="btn btn-voltar">Marcar como perdido</button></form></article>
+{% else %}<p>Nenhum pedido pendente.</p>{% endfor %}</section>
+<section class="painel"><h2>Avaliações</h2>{% for a in avaliacoes %}<article class="email"><b>{{ a.nome if a.exibir_nome else 'Anônimo' }}</b> {{ m.estrelas(a.nota) }}<p>{{ a.comentario }}</p></article>{% else %}<p>Sem avaliações.</p>{% endfor %}</section>
+{% endif %}
+{% endblock %}

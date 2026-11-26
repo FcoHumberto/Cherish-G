@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% import "_macros.html" as m %}
+{% block titulo %}Esqueci minha senha{% endblock %}
+{% block corpo %}
+<section class="painel estreito"><h1>Esqueci minha senha</h1>
+<form method="post" class="form"><label>E-mail da conta<input type="email" name="email" required></label>
+<div class="linha">{{ m.voltar() }}<button class="btn btn-avancar">Enviar link</button></div></form>
+<p><small>Demonstração: o e-mail enviado aparece na <a href="{{ url_for('contas.caixa_publica_reset') }}">Caixa de saída</a> (informe seu e-mail em <code>?email=</code>).</small></p></section>
+{% endblock %}

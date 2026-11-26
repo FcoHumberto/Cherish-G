@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% import "_macros.html" as m %}
+{% block titulo %}Meus Pedidos{% endblock %}
+{% block corpo %}<h1>Meus Pedidos</h1>
+{% for i in itens %}<article class="painel linha entre"><div><b>{{ i.quantidade }}× {{ i.nome_produto }}</b><br><small>Pedido #{{ i.pedido_id }} · {{ i.data_hora }}</small></div>
+<div class="linha"><span class="status s-{{ i.status | replace(' ','-') | lower }}">{{ i.status }}</span><a class="btn btn-avancar" href="{{ url_for('pedidos.detalhes', item_id=i.id) }}">Detalhes</a></div></article>
+{% else %}<p>Você ainda não fez compras.</p>{% endfor %}{% endblock %}

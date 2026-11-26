@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% import "_macros.html" as m %}
+{% block titulo %}Verificação em duas etapas{% endblock %}
+{% block corpo %}
+<section class="painel estreito"><h1>Verificação em duas etapas</h1>
+<p>Digite o código enviado para <b>{{ email }}</b>. <small>(Demonstração: veja em <a href="{{ url_for('contas.caixa_publica_reset', email=email) }}">Caixa de saída</a>.)</small></p>
+<form method="post" class="form"><label>Código<input name="codigo" inputmode="numeric" maxlength="6" required autofocus></label>
+<div class="linha">{{ m.voltar() }}<button class="btn btn-avancar">Verificar</button></div></form></section>
+{% endblock %}

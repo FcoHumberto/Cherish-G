@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% import "_macros.html" as m %}
+{% block titulo %}Caixa de saída{% endblock %}
+{% block corpo %}
+<section class="painel"><h1>Caixa de saída (demonstração)</h1><p>O Postmark é simulado: os e-mails "enviados" ficam aqui.</p>
+{% for e in emails %}<article class="email"><h3>{{ e.assunto }}</h3><small>Para {{ e.destinatario }} · {{ e.data }}</small><pre>{{ e.corpo }}</pre></article>
+{% else %}<p>Nenhum e-mail.</p>{% endfor %}{{ m.voltar() }}</section>
+{% endblock %}

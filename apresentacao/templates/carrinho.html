@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% import "_macros.html" as m %}
+{% block titulo %}Carrinho de Compras{% endblock %}
+{% block corpo %}
+<section class="painel"><h1>Carrinho de Compras</h1>
+{% for i in itens %}<article class="linha entre item"><div><b>{{ i.nome }}</b><br>{{ i.quantidade }} × {{ i.preco_final | brl }} = <b>{{ i.subtotal | brl }}</b></div>
+<form method="post" action="{{ url_for('pedidos.remover', pid=i.produto_id) }}"><button class="btn btn-voltar">Remover</button></form></article>
+{% else %}<p>Seu carrinho está vazio.</p>{% endfor %}
+{% if itens %}<p class="total">Total: {{ total | brl }}</p>{% endif %}
+<div class="linha">{{ m.voltar() }}{% if itens %}<a class="btn btn-avancar" href="{{ url_for('pedidos.entrega') }}">Continuar para a compra</a>{% endif %}</div></section>
+{% endblock %}
